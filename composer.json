@@ -7,7 +7,8 @@
     "homepage": "https://github.com/AlexanderMitov/MongoFilesystem",
     "autoload": {
         "psr-0" : {
-            "MongoFilesystem" : "AlexanderMitov/MongoFilesystem"
+            "MongoFilesystem\\" : "MongoFilesystem",
+            "classmap": ["libraries/"]
         }
     },
     "require": {
