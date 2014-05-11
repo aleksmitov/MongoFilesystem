@@ -1,0 +1,29 @@
+{
+    "name": "alexander-mitov/mongo-filesystem",
+    "type": "library",
+    "keywords": ["database"],
+    "license": "Apache-2.0",
+    "description": "Implementation of a filesystem on top of MongoDB",
+    "homepage": "https://github.com/AlexanderMitov/MongoFilesystem",
+    "autoload": {
+        "psr-0" : {
+            "MongoFilesystem" : "AlexanderMitov/MongoFilesystem"
+        }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "ext-mongo": ">=1.4.0",
+        "twig/twig": "1.*"
+    },
+    "suggest": {
+        "ext-zip": "Necessary for the folder download API"
+    },
+    "authors": [
+        {
+            "name": "Alexander Mitov",
+            "email": "alex.mitov96@gmail.com",
+            "homepage": "https://github.com/AlexanderMitov",
+            "role": "Lead Developer"
+        }
+    ]
+}
