@@ -8,7 +8,8 @@
     "autoload": {
         "psr-0" : {
             "MongoFilesystem\\" : "src",
-            "classmap": ["src/libraries/", "src/", "src/libraries/ZipStream.php"]
+            "classmap": ["src/libraries/"],
+            "ZipStream": ["src/libraries/"]
         }
     },
     "require": {
