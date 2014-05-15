@@ -1,3 +1,4 @@
+<?php
 /*
 * Copyright (c) 2014 Alexander Mitov
 * 
@@ -13,7 +14,6 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-<?php
 namespace MongoFilesystem\Renderer;
 use MongoFilesystem\MongoFile;
 use \Twig_Loader_Filesystem;
