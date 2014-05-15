@@ -9,7 +9,11 @@
         "psr-0" : {
             "MongoFilesystem\\" : "src",
             "classmap": ["src/libraries/"],
+<<<<<<< HEAD
             "ZipStream": ["src/libraries/"]
+=======
+			"ZipStream": ["src/libraries"]
+>>>>>>> e4dbe492ba8b7de7a52143f1c32ac1d8c1a042e8
         }
     },
     "require": {
