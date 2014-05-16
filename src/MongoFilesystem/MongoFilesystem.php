@@ -40,18 +40,17 @@ class MongoFilesystem
 {
     const ROOT_FOLDER_NAME = "ROOT";
     /**
-     * 
      * @var MongoDB
      */
     protected $db;
     /**
-     * Hold the collections containing the folders
+     * Holds the collections containing the folders
      * @var MongoCollection
      */
     protected $folderCollection;
     /**
      * Holds the GridFS instance
-     * @param MongoGridFS
+     * @var MongoGridFS
      */
     protected $gridFS;
     /**
@@ -64,15 +63,15 @@ class MongoFilesystem
      */
     protected $rootFolderID;
     /**
-     * Constructor
-     * @param MongoDB $mongoDB
-     */
-    /**
      * Name of the GridFS collection
+     * We need it in order to make GridFSCollection queries
+     * with the standard API
      * @var string
      */
     protected $gridFSCollectionName;
-    /*
+    /**
+     * The constructor loading the DB configuration
+     * and assigning root folder
      * @param MongoDB
      */
     public function __construct(MongoDB $mongoDB) {
@@ -101,7 +100,7 @@ class MongoFilesystem
             $this->rootFolderID = $result["_id"];
             return;
         }
-        //Root fodler doesn't exist so we create it
+        //Root folder doesn't exist so we create it
         $metadata["parentFolderID"] = NULL;
         $metadata["folderName"] = self::ROOT_FOLDER_NAME;
         $metadata["level"] = 0;
@@ -114,7 +113,7 @@ class MongoFilesystem
     }
 
     /**
-     * Recursively creates folder and subfolders
+     * Recursively creates the folder and its subfolders
      * and uploads files inside them to MongoDB
      * 
      * @param \MongoFilesystem\Folder $folder
@@ -162,7 +161,7 @@ class MongoFilesystem
        }
     }
     /**
-     * Iteratively creates folder and subfolders
+     * Iteratively creates the folder and its subfolders
      * and uploads files inside them to MongoDB
      * 
      * @param \MongoFilesystem\Folder $folder
@@ -180,19 +179,19 @@ class MongoFilesystem
         $parentFolder = $this->folderCollection->findOne($criteria, array("level" => true));
         $level = $parentFolder["level"] + 1;
         /**
-        * Will be used to map folders paths to their parent folder's MongoId
+        * Will be used to map folders' paths to their parent folder's MongoId
         * @var array<MongoId>
         */
        $parent = array();
        /**
-        * Will be used to map folders paths to their depth level
+        * Will be used to map folders' paths to their depth level
         * @var array<int>
         */
        $depthLevel = array();
        /**
         * @var SplStack<Folder>
         */
-       $stack = new SplStack(); //Holds Folder instances
+       $stack = new SplStack();
        
        //pushing the first folder onto the stack
        $stack->push($folder);
@@ -240,7 +239,7 @@ class MongoFilesystem
      * The third parameter should always be left to true, otherwise parent folders
      * sizes won't have their actual values. The third parameter is designed for
      * the uploadFolder method in order to avoid redundant queries
-     * @param File $file - the file to be uploaded
+     * @param \MongoFilesystem\File $file - the file to be uploaded
      * @param MongoId $parentFolderID The ID of the folder the file's in
      * @param boolean $updateParentFolderSizes Whether to add the file's size to all parent folders' sizes.
      */
@@ -295,7 +294,7 @@ class MongoFilesystem
      * Returns the resource stream of the current file in the GridFS
      * @param MongoId $fileID
      * @return stream
-     * @throws MongoFileNotFoundException
+     * @throws \MongoFilesystem\MongoFileNotFoundException
      */
     public function getFileResourceStream(MongoId $fileID)
     {
@@ -309,13 +308,15 @@ class MongoFilesystem
     }
     /**
      * Returns an instance of MongoFile for the current file
-     * @return MongoFile
-     * @throws MongoFileNotFoundException
+     * @return \MongoFilesystem\MongoFile
+     * @throws \MongoFilesystem\MongoFileNotFoundException
      */
     public function getFile(MongoId $fileID)
-    {
-        //get() returns an instance of MongoGridFSFile or NULL
-        $gridFSFile = $this->gridFS->get($fileID);
+    {   
+        /**
+         * @var MongoGridFSFile|NULL
+         */
+        $gridFSFile = $this->gridFS->get($fileID); //get() returns an instance of MongoGridFSFile or NULL
         if($gridFSFile === NULL) throw new MongoFileNotFoundException($fileID);
         $metadata = array();
         $metadata["_id"] = $gridFSFile->file["_id"];
@@ -340,8 +341,8 @@ class MongoFilesystem
      * Might lead to unnecessary files and folders stuck in the DB. TODO
      * @param MongoId
      * @param boolean
-     * @return MongoFolder
-     * @throws MongoFolderNotFoundException
+     * @return \MongoFilesystem\MongoFolder
+     * @throws \MongoFilesystem\MongoFolderNotFoundException
      */
     public function getFolder(MongoId $folderID, $findSubfoldersAndFiles = true)
     {
@@ -384,7 +385,7 @@ class MongoFilesystem
      * @param string filename
      * @param string $extension
      * @param MongoId $parentFolderID
-     * @return MongoFile
+     * @return \MongoFilesystem\MongoFile
      */
     public function getFileByNameAndParentFolderID($filename, $extension, MongoId $parentFolderID)
     {
@@ -407,7 +408,7 @@ class MongoFilesystem
      * Gets a folder by its name and parent folder
      * @param string $folderName
      * @param MongoId $parentFolderID
-     * @return MongoFolder
+     * @return \MongoFilesystem\MongoFolder
      */
     public function getFolderByNameAndParentFolderID($folderName, MongoId $parentFolderID)
     {
@@ -456,7 +457,7 @@ class MongoFilesystem
      * Returns a MongoFile instance of the file
      * @param string $filePath
      * @param string $delimiter
-     * @return MongoFile
+     * @return \MongoFilesystem\MongoFile
      */
     public function getFileByPath($filePath, $delimiter = '/')
     {
@@ -490,7 +491,7 @@ class MongoFilesystem
      * Returns a MongoFolder instance
      * @param string $pathToFolder
      * @param string $delimiter
-     * @return MongoFolder
+     * @return \MongoFilesystem\MongoFolder
      */
     public function getFolderByPath($pathToFolder, $delimiter = '/')
     {
@@ -545,7 +546,7 @@ class MongoFilesystem
     }
     /**
      * Deletes the passed MongoFile from the DB
-     * @param MongoFile
+     * @param \MongoFilesystem\MongoFile
      * @return void
      */
     public function deleteFile(MongoFile $file)
@@ -571,7 +572,8 @@ class MongoFilesystem
     }
     /**
      * Deletes the specified MongoFolder
-     * @param MongoFolder
+     * @param \MongoFilesystem\MongoFolder
+     * @throws InvalidArgumentException
      * @return void
      */
     public function deleteFolder(MongoFolder $folder)
@@ -590,8 +592,8 @@ class MongoFilesystem
     }
     /**
      * Makes a MongoFolder instance of the parent folder 
-     * @param MongoFile|MongoFolder $fileOrFolder
-     * @return MongoFolder
+     * @param \MongoFilesystem\MongoFile|\MongoFilesystem\MongoFolder $fileOrFolder
+     * @return \MongoFilesystem\MongoFolder
      */
     public function getParentFolder($fileOrFolder)
     {
@@ -638,9 +640,9 @@ class MongoFilesystem
     }
     /**
      * Returns the absolute path of the file in the DB
-     * @param MongoFile $file
-     * @param boolean
-     * @param char
+     * @param \MongoFilesystem\MongoFile $file
+     * @param boolean $returnAsString if set to true it will return a string instead of a SplDoublyLinkedList instance
+     * @param char $delimiter Delimiter separating the path segments
      * @return SplDoublyLinkedList<string>|string
      */
     public function getFilePath(MongoFile $file, $returnAsString = false, $delimiter = '/')
@@ -680,7 +682,7 @@ class MongoFilesystem
         return true;
     }
     /**
-     * Checks if a folder with specified ID exists
+     * Checks if a folder with the specified ID exists
      * @param MongoId $folderID
      * @return boolean
      */
@@ -729,10 +731,10 @@ class MongoFilesystem
     }
     /**
      * Checks if a file with the given ID exists in the GridFS
-     * @param \MongoFilesystem\MongoID $fileID
+     * @param MongoId $fileID
      * @return boolean
      */
-    public function fileWithIDExists(MongoID $fileID)
+    public function fileWithIDExists(MongoId $fileID)
     {
         $criteria = array("_id" => $fileID);
         /**
@@ -774,7 +776,7 @@ class MongoFilesystem
     }
     /**
      * Returns the file as a string
-     * @param MongoFile
+     * @param \MongoFilesystem\MongoFile
      * @return string the File contents
      */
     public function downloadFile(MongoFile $file)
@@ -790,7 +792,7 @@ class MongoFilesystem
     }
     /**
      * Downloads the file to a directory on the local file system
-     * @param MongoFile $file
+     * @param \MongoFilesystem\MongoFile $file
      * @param string $destinationDirectory
      * @return void
      */
@@ -805,7 +807,7 @@ class MongoFilesystem
     }
     /**
      * Downloads the file to the specified file in the local filesystem
-     * @param MongoFile The file to download
+     * @param \MongoFilesystem\MongoFile The file to download
      * @param string The path the file to be downloaded into
      */
     public function downloadFileInFile(MongoFile $file, $destinationPath)
@@ -823,7 +825,7 @@ class MongoFilesystem
     }
     /**
      * Outputs the specified file to the client
-     * @param MongoFile $file The file to output
+     * @param \MongoFilesystem\MongoFile $file The file to output
      * @return void
      */
     public function downloadAndOutputFile(MongoFile $file)
@@ -954,14 +956,14 @@ class MongoFilesystem
     {
         $destinationFolder = new Folder($destinationDirectory);
         $zipPath = $destinationFolder->getAbsolutePath() . '/' . $folder->getFoldername() . '.' . 'zip';
-        $handle = fopen($zipPath, 'w'); //creating the file
+        $handle = fopen($zipPath, 'w'); //creating the file for the archive
         fclose($handle);
         $this->downloadFolderInFile($folder, $zipPath);
     }
     /**
      * Choose how to create and output the zip
      * Use with caution streaming as it is consuming excessive amounts of RAM = max size of file to download
-     * @param MongoFolder $folder
+     * @param \MongoFilesystem\MongoFolder $folder
      * @param boolean $useStreaming Whether or not to directly output the zip while creating it
      */
     public function downloadAndOutputFolder(MongoFolder $folder, $useStreaming = false)
@@ -974,7 +976,7 @@ class MongoFilesystem
      * Uses RAM = the max size of file to zip
      * Doesn't download any of the files nor creates the zip on the server
      * And avoids timeouts by outputting data directly to the client 
-     * @param MongoFolder $folder
+     * @param \MongoFilesystem\MongoFolder $folder
      * @return void
      */
     protected function downloadAndOutputFolderWithStream(MongoFolder $folder)
@@ -1175,11 +1177,11 @@ class MongoFilesystem
         $this->folderCollection->update($criteria, array('$set' => $rules));
     }
     /**
-     * Chenges the file's name to the specified
+     * Chenges the file's name and extension to the specified
      * @param MongoId $fileID
-     * @param string $newName
-     * @param string $extension
-     * @throws MongoFileNotFoundException
+     * @param string $newName The new name of the file
+     * @param string $extension The new extension
+     * @throws \MongoFilesystem\MongoFileNotFoundException
      * @throes ErrorException
      * @return void
      */
@@ -1200,7 +1202,7 @@ class MongoFilesystem
         $gridFSCollection->update($criteria, array('$set' => $rules));
     }
     /**
-     * Changes the parentFolderID to the specified
+     * Changes the folder's parentFolderID to the specified
      * @param MongoId $folderIDtoMove
      * @param MongoId $folderIDToPutIn
      * @throws ErrorException
@@ -1275,7 +1277,7 @@ class MongoFilesystem
      * The update funciton creates and uploads files/folders that do not exist
      * and replaces files that already exist and are modified.
      * @param MongoId $folderToUpdate The folder ID to update
-     * @param Folder $folderToBeUpdatedWith The folder to update with
+     * @param \MongoFilesystem\Folder $folderToBeUpdatedWith The folder to update with
      * @return void
      */
     public function updateFolder(MongoId $folderToUpdate, Folder $folderToBeUpdatedWith)
