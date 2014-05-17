@@ -25,7 +25,7 @@ Look at the demo project: https://github.com/AlexanderMitov/Demo_Project_Of_Mong
 
 Tips
 -----------
-Getting a folder from the MongoFilesystem (or from the local fs using \MongoFilesystem\File) means that all its subfolders and subfolders of subfolders and so on are recursively/iteratively traversed. This is a nice convinience when performing upload/update/delete oprations on a folder or a certaing action to its subfolders but won't be optimal for cases when you need just the name or other property of the folder. In such cases set the second parameter of `\MongoFilesytem::getFolder()` to false to avoid traversing subfolders. This also means that you should not perform upload/update/delete operations on a folder with not set subfolders for obvious reasons.
+Getting a folder from the MongoFilesystem (or from the local fs using \MongoFilesystem\File) means that all its subfolders and subfolders of subfolders and so on are recursively/iteratively traversed. This is a nice convinience when performing upload/update/delete oprations on a folder or a certaing action to its subfolders but won't be optimal for cases when you need just the name or other property of the folder. In such cases set the second parameter of `\MongoFilesytem::getFolder()` to false to avoid traversing subfolders. This also means that you should not perform upload/update/delete operations on a folder with unset subfolders for obvious reasons.
 
 API
 ----------------
