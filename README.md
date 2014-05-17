@@ -12,9 +12,9 @@ You need the PHP Zip extension >= 1.1.0 in order to use the folder zipping funct
 
 Installation
 ==============
-Install Composer https://getcomposer.org/doc/00-intro.md.
-Add to your composer.json:
+1. Install Composer https://getcomposer.org/doc/00-intro.md.
+2. Add to your composer.json:
     ```"require": {
         "alexander-mitov/mongo-filesystem": "1.0.*"
     }```
-Then run the `composer install` command.
+3. Run the `composer install` command.
