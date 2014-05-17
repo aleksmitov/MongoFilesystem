@@ -1290,9 +1290,6 @@ class MongoFilesystem
                 $fileInDB = $this->getFileIDByNameAndParentFolderID($file->getName(), $file->getExtension(), $folderToUpdate);
                 if($this->filesAreIdentical($fileInDB, $file))
                         continue; //we skip this file as it is identical to the one in the DB
-                /**
-                 * @var MongoId
-                 */
                 $this->updateFile($fileInDB, $file);
             }
             else
