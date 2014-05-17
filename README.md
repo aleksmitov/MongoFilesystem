@@ -9,3 +9,11 @@ PHP >= 5.4.0;
 MongoDB PHP Driver >= 1.4.0;
 PHP SimpleXML extension;
 You need the PHP Zip extension >= 1.1.0 in order to use the folder zipping functionality;
+
+Installation
+==============
+Install Composer https://getcomposer.org/doc/00-intro.md.
+Add to your composer.json:
+  "require": {
+		  "alexander-mitov/mongo-filesystem": "1.0.*"
+	}
