@@ -14,6 +14,6 @@ Installation
 ==============
 Install Composer https://getcomposer.org/doc/00-intro.md.
 Add to your composer.json:
-    "require": {
-    	"alexander-mitov/mongo-filesystem": "1.0.*"
-    }
+    ```"require": {
+        "alexander-mitov/mongo-filesystem": "1.0.*"
+    }```
