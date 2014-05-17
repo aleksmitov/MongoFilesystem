@@ -1194,7 +1194,7 @@ class MongoFilesystem
         //we can update now
         //We need to use the MongoCollection API on the fs.files collection
         /**
-         * @var MongoCOllection
+         * @var MongoCollection
          */
         $gridFSCollection = $this->db->selectCollection($this->gridFSCollectionName . ".files");
         $criteria = array("_id" => $fileID);
