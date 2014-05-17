@@ -18,3 +18,10 @@ Installation
         "alexander-mitov/mongo-filesystem": "1.0.*"
     }```
 3. Run the `composer install` command.
+
+Basic usage
+-----------
+Look at the demo project: https://github.com/AlexanderMitov/Demo_Project_Of_MongoFilesystem
+
+API
+----------------
