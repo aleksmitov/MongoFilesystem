@@ -23,6 +23,10 @@ Basic usage
 -----------
 Look at the demo project: https://github.com/AlexanderMitov/Demo_Project_Of_MongoFilesystem
 
+Tips
+-----------
+TODO
+
 API
 ----------------
 * MongoFilesystem::__construct(MongoDB)
