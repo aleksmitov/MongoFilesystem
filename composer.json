@@ -6,8 +6,8 @@
     "description": "Implementation of a filesystem on top of MongoDB",
     "homepage": "https://github.com/AlexanderMitov/MongoFilesystem",
     "autoload": {
-        "psr-0" : {
-            "MongoFilesystem\\" : "src",
+        "psr-0": {
+            "MongoFilesystem\\": "src",
             "classmap": ["src/libraries/"],
             "ZipStream": ["src/libraries/"]
         }
