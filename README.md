@@ -17,3 +17,4 @@ Add to your composer.json:
     ```"require": {
         "alexander-mitov/mongo-filesystem": "1.0.*"
     }```
+Then run the `composert install` command
