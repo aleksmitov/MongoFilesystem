@@ -21,7 +21,7 @@ use \Exception;
 use \InvalidArgumentException;
 use \ErrorException;
 /**
- * The File class is an Object-oriented representation of a file in the file system
+ * The File class is an Object-oriented representation of a file in the local file system
  */
 class File
 {

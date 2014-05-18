@@ -17,7 +17,7 @@
 namespace MongoFilesystem;
 use \SplDoublyLinkedList;
 /**
- * API for representation of folders in the MongoDB
+ * API for representation of folders in the MongoFilesystem
  */
 class MongoFolder
 {

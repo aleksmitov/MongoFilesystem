@@ -17,7 +17,7 @@
 namespace MongoFilesystem;
 use \DateTime;
 /**
- * API for working with files in MongoDB
+ * API for working with files in the MongoFilesystem
  */
 class MongoFile
 {

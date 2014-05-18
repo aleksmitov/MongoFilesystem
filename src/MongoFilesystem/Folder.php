@@ -22,7 +22,7 @@ use \ErrorException;
 use \SplStack;
 use \SplQueue;
 /**
- * An Object-oriented representation of a folder in the file system
+ * An Object-oriented representation of a folder in the local file system
  */
 class Folder
 {
