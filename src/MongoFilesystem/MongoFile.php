@@ -53,11 +53,11 @@ class MongoFile
      * @var MongoId
      */
     protected $ID;
-    /*
+    /**
      * @var string
      */
     protected $checksum;
-    /*
+    /**
      * @var DateTime
      */
     protected $uploadDate;
