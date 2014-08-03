@@ -471,7 +471,7 @@ class MongoFilesystem
      */
     public function getFolderIDByPath($pathToFolder, $delimiter = "/")
     {
-        $pathToFolder = trim($pathToFolder, '/');
+        $pathToFolder = trim($pathToFolder, $delimiter);
         $segments = explode($delimiter, $pathToFolder);
         /**
          * @var MongoId
