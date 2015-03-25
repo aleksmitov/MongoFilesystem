@@ -1,7 +1,7 @@
 MongoFilesystem
 ===============
 
-Filesystem implementation on top of MongoDB. It manages a hierarchy of folders and files inside them. The library uses the GridFS for the file storage and a standard collection for the folders. There is an Object-oriented representation of the folders and files in the MongoFilesystem and rich API for performing operations on them. There are file/folder renderers for JSON/HTML/XML as well. 
+An implementation in PHP of a hierarchical file system using MongoDB as a storage engine. The library uses the MongoDB GridFS API for storing the files and a standard collection for the folder information. There is an Object-oriented representation of the folders and files in the MongoFilesystem and rich API for performing operations on them. There are file/folder renderers for JSON/HTML/XML as well. 
 
 Requirements
 ------------
